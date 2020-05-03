@@ -1,20 +1,13 @@
 package com.diee.jpademo.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
+@NoArgsConstructor
+@Getter @Setter
 public class OrderWithDetailDto extends OrderDto {
-
     private List<OrderDetailDto> orderDetails;
-
-    public OrderWithDetailDto() {
-        super();
-    }
-
-    public List<OrderDetailDto> getOrderDetails() {
-        return orderDetails;
-    }
-
-    public void setOrderDetails(List<OrderDetailDto> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
 }
