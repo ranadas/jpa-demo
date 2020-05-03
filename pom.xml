@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.diee</groupId>
-	<artifactId>jpa-demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>entity-graph-jpa</artifactId>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>jpa-demo</name>
-	<description>Demo project for Spring Boot and JPA</description>
+	<description>Spring Boot JPA with Entity Graph</description>
 
 	<properties>
 		<java.version>11</java.version>
