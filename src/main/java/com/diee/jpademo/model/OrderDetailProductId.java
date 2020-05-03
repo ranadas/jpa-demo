@@ -1,11 +1,13 @@
 package com.diee.jpademo.model;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Data
 @Embeddable
 public class OrderDetailProductId implements Serializable {
 
@@ -19,23 +21,6 @@ public class OrderDetailProductId implements Serializable {
 
     public OrderDetailProductId(Integer orderNumber, String productCode){
         this.orderNumber = orderNumber;
-        this.productCode = productCode;
-    }
-
-
-    public Integer getOrderNumber() {
-        return orderNumber;
-    }
-
-    public void setOrderNumber(Integer orderNumber) {
-        this.orderNumber = orderNumber;
-    }
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
         this.productCode = productCode;
     }
 
