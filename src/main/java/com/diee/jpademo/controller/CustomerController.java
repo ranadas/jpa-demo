@@ -5,13 +5,11 @@ import com.diee.jpademo.model.Customer;
 import com.diee.jpademo.model.CustomerRelation;
 import com.diee.jpademo.service.CustomerService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,18 +24,20 @@ public class CustomerController {
     }
 
     @GetMapping("/")
-    public String getMessage(){
+    public String getMessage() {
         return "Hello, World";
     }
 
     @GetMapping("/{id}")
-    public CustomerDto getCustomer(@PathVariable("id") Integer id){
-        Customer customer = customerService.getById(id);
-        return modelMapper.map(customer, CustomerDto.class);
+    public CustomerDto getCustomer(@PathVariable("id") Integer id) {
+        Optional<Customer> customerOptional = customerService.getById(id);
+        return customerOptional
+                .map(value -> modelMapper.map(value, CustomerDto.class))
+                .orElseGet(() -> new CustomerDto());
     }
 
     @GetMapping("/{id}/with-orders")
-    public CustomerWithOrdersDto getCustomerAndOrders(@PathVariable("id") Integer id){
+    public CustomerWithOrdersDto getCustomerAndOrders(@PathVariable("id") Integer id) {
 
         Customer customer = customerService.getCustomerWithGraphById(id, CustomerRelation.CUSTOMER_WITH_ORDERS);
         CustomerWithOrdersDto customerWithOrders = modelMapper.map(customer, CustomerWithOrdersDto.class);
@@ -49,7 +49,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/with-orders-and-details")
-    public CustomerWithOrdersDto getCustomerWithOrdersAndDetails(@PathVariable("id") Integer id){
+    public CustomerWithOrdersDto getCustomerWithOrdersAndDetails(@PathVariable("id") Integer id) {
 
         Customer customer = customerService.getCustomerWithGraphById(id, CustomerRelation.CUSTOMER_WITH_ORDERS_AND_DETAILS);
         CustomerWithOrdersDto customerDto = modelMapper.map(customer, CustomerWithOrdersDto.class);
@@ -70,5 +70,14 @@ public class CustomerController {
                 }).collect(Collectors.toList());
         customerDto.setOrders(orders);
         return customerDto;
+    }
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public CustomerDto addCustomer(@RequestBody CustomerDto customerDto) {
+        Customer customer = modelMapper.map(customerDto, Customer.class);
+        customer.setCustomerNumber(1);
+        customer = customerService.addCustomer(customer);
+        return modelMapper.map(customer, CustomerDto.class);
     }
 }
