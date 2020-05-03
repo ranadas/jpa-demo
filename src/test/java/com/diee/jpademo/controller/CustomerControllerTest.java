@@ -42,4 +42,12 @@ class CustomerControllerTest {
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Hello, World")));
     }
+
+    @Test
+    public void shouldReturnACustomers() throws Exception {
+        this.mockMvc.perform(get("/customers/103"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Atelier graphique")))
+        ;
+    }
 }

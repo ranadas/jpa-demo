@@ -33,7 +33,8 @@ import java.util.Set;
 @Entity
 @Table(name = "customers")
 public class Customer implements Serializable {
-
+//    insert  into `customers`(`customerNumber`,`customerName`,`contactLastName`,`contactFirstName`,`phone`,`addressLine1`,`addressLine2`,
+//    `city`,`state`,`postalCode`,`country`,`salesRepEmployeeNumber`,`creditLimit`) values
     @Id
     @NotNull
     private Integer customerNumber;
