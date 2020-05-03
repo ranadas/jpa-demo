@@ -67,6 +67,4 @@ public class CustomerController {
         customerDto.setOrders(orders);
         return customerDto;
     }
-
-
 }
