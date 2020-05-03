@@ -14,20 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
+    private final CustomerService customerService;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private CustomerService customerService;
+    public CustomerController(CustomerService customerService, ModelMapper modelMapper) {
+        this.customerService = customerService;
+        this.modelMapper = modelMapper;
+    }
 
-    @Autowired
-    private ModelMapper modelMapper;
+    @GetMapping("/")
+    public String getMessage(){
+        return "Hello, World";
+    }
 
     @GetMapping("/{id}")
     public CustomerDto getCustomer(@PathVariable("id") Integer id){
-
         Customer customer = customerService.getById(id);
         return modelMapper.map(customer, CustomerDto.class);
     }
