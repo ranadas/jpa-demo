@@ -8,5 +8,11 @@ It allows defining a template by grouping the related persistence fields which w
 
 Briefly put, the JPA provider loads all the graph in one select query and then avoids fetching association with more SELECT queries. This is considered a good approach for improving application performance.
 
-https://medium.com/swlh/jpa-entity-graphs-with-spring-boot-30cb110ba4f8
 
+## Links to refer -
+* [Original Article](https://medium.com/swlh/jpa-entity-graphs-with-spring-boot-30cb110ba4f8) 
+* [Integration Testing Spring Boot Microservices](https://medium.com/@mohamadalaloush/integration-testing-spring-boot-microservices-docker-compose-2a8313361dab)
+  
+  [Code of link above](https://github.com/MemoAlfa/integration-test-demo)
+  
+* [JPA Entity Graph Baledung](https://www.baeldung.com/jpa-entity-graph)

@@ -74,7 +74,6 @@ class CustomerControllerTest {
         //verifyNoMoreInteractions(customerService);
     }
 
-    @Disabled
     @DisplayName("Get a unknown Customer with an ID")
     @Test
     public void shouldReturnAVoidCustomers() throws Exception {
@@ -83,6 +82,7 @@ class CustomerControllerTest {
         ;
     }
 
+    @Disabled
     @DisplayName("")
     @Test
     public void createEmployeeAPI() throws Exception {
