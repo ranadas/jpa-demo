@@ -11,7 +11,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
   h2:
     console:
       path: /h2-console
@@ -19,3 +19,10 @@ spring:
         trace:  false
         settings:
           web-allow-others: false
+
+logging:
+  level:
+    root: ERROR
+    org.springframework: ERROR
+    com.rdas: DEBUG
+    org.hibernate: ERROR

@@ -2,21 +2,30 @@ package com.rdas.entitygraph.resources;
 
 import com.rdas.entitygraph.dto.CustomerDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rdas.entitygraph.model.Customer;
 import com.rdas.entitygraph.resources.CustomerController;
+import com.rdas.entitygraph.service.CustomerService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -36,6 +45,9 @@ class CustomerControllerTest {
     @Autowired
     private CustomerController controller;
 
+    @MockBean
+    CustomerService customerService;
+
     @Test
     public void initBeans() {
         assertNotNull(mockMvc);
@@ -43,20 +55,23 @@ class CustomerControllerTest {
         assertNotNull(controller);
     }
 
-    @Test
-    public void shouldReturnDefaultMessage() throws Exception {
-        this.mockMvc.perform(get("/customers/"))
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("Hello, World")));
+    @BeforeEach
+    public void init() {
     }
 
     @DisplayName("Get a known Customer with an ID")
     @Test
     public void shouldReturnACustomers() throws Exception {
+//        CustomerDto customerDto = CustomerDto.builder().customerName("Alberto Giribaldi").build();
+
+        Customer customer = Customer.builder().customerNumber(103).contactFirstName("Alberto").contactLastName("Giribaldi").build();
+        when(customerService.getById(103)).thenReturn(Optional.of(customer));
         this.mockMvc.perform(get("/customers/103"))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("Atelier graphique")))
+                .andExpect(content().string(containsString("103")))
+                //.andExpect(content().string(containsString("Alberto Giribaldi")))
         ;
+        //verifyNoMoreInteractions(customerService);
     }
 
     @Disabled

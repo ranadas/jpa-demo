@@ -1,6 +1,10 @@
 package com.rdas.entitygraph.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -31,6 +35,9 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "customers")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer implements Serializable {
 //    insert  into `customers`(`customerNumber`,`customerName`,`contactLastName`,`contactFirstName`,`phone`,`addressLine1`,`addressLine2`,
 //    `city`,`state`,`postalCode`,`country`,`salesRepEmployeeNumber`,`creditLimit`) values

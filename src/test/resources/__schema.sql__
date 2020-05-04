@@ -1,0 +1,76 @@
+drop table customers if exists;
+drop table orderdetails if exists;
+drop table orders if exists;
+drop table productlines if exists;
+drop table products if exists;
+-- alter table orderdetails drop constraint FK_ORDER;
+-- alter table orderdetails  drop constraint FK_PRODUCT_CODE;
+-- alter table orders  drop constraint FK_CUSTOMER_NUMBER;
+-- alter table products  drop constraint FK_PRODUCT_LINE;
+create table customers
+(
+    customerNumber         integer not null AUTO_INCREMENT,
+    addressLine1           varchar(255),
+    addressLine2           varchar(255),
+    city                   varchar(255),
+    contactFirstName       varchar(255),
+    contactLastName        varchar(255),
+    country                varchar(255),
+    creditLimit            float,
+    customerName           varchar(255),
+    phone                  varchar(255),
+    postalCode             varchar(255),
+    salesRepEmployeeNumber integer,
+    state                  varchar(255),
+    primary key (customerNumber)
+);
+
+create table orderdetails
+(
+    orderNumber     integer      not null AUTO_INCREMENT,
+    productCode     varchar(255) not null,
+    orderLineNumber integer,
+    priceEach       decimal(19, 2),
+    quantityOrdered integer,
+    primary key (orderNumber, productCode),
+);
+
+create table orders
+(
+    orderNumber    integer not null AUTO_INCREMENT,
+    comments       varchar(255),
+    orderDate      date,
+    requiredDate   date,
+    shippedDate    date,
+    status         varchar(255),
+    customerNumber integer,
+    primary key (orderNumber)
+);
+
+create table productlines
+(
+    productLine     varchar(255) not null AUTO_INCREMENT,
+    htmlDescription varchar(255),
+    image           blob,
+    textDescription varchar(255),
+    primary key (productLine)
+);
+
+create table products
+(
+    productCode        varchar(255) not null AUTO_INCREMENT,
+    buyPrice           float,
+    MSRP               float,
+    productDescription varchar(255),
+    productName        varchar(255),
+    productScale       varchar(255),
+    productVendor      varchar(255),
+    quantityInStock    integer,
+    productLine        varchar(255),
+    primary key (productCode)
+);
+
+alter table orderdetails add constraint FK_ORDER foreign key (orderNumber) references orders;
+alter table orderdetails add constraint FK_PRODUCT_CODE foreign key (productCode) references products;
+alter table orders add constraint FK_CUSTOMER_NUMBER foreign key (customerNumber) references customers;
+alter table products add constraint FK_PRODUCT_LINE foreign key (productLine) references productlines;
