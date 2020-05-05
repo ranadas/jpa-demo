@@ -16,3 +16,9 @@ Briefly put, the JPA provider loads all the graph in one select query and then a
   [Code of link above](https://github.com/MemoAlfa/integration-test-demo)
   
 * [JPA Entity Graph Baledung](https://www.baeldung.com/jpa-entity-graph)
+
+* [Test Containers](https://www.testcontainers.org/)
+* [Test Containers - eg.1](https://github.com/drjunior90/testcontainers-demo)
+* [Test Containers - eg.2](https://github.com/eugenp/tutorials/tree/master/testing-modules/test-containers)
+
+*[Docker Compose Rule](https://blog.codecentric.de/en/2017/03/writing-integration-tests-docker-compose-junit/)
