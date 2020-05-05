@@ -71,8 +71,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto addCustomer(@RequestBody CustomerDto customerDto) {
         Customer customer = modelMapper.map(customerDto, Customer.class);
-        customer.setCustomerNumber(1);
-        customer = customerService.addCustomer(customer);
-        return modelMapper.map(customer, CustomerDto.class);
+        Customer customer1 = customerService.addCustomer(customer);
+        return modelMapper.map(customer1, CustomerDto.class);
     }
 }

@@ -3,6 +3,7 @@ package com.rdas.entitygraph.resources;
 import com.rdas.entitygraph.dto.CustomerDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rdas.entitygraph.model.Customer;
+import com.rdas.entitygraph.repository.CustomerRepository;
 import com.rdas.entitygraph.resources.CustomerController;
 import com.rdas.entitygraph.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,6 +49,9 @@ class CustomerControllerTest {
     @MockBean
     CustomerService customerService;
 
+    @MockBean
+    CustomerRepository customerRepository;
+
     @Test
     public void initBeans() {
         assertNotNull(mockMvc);
@@ -82,13 +86,18 @@ class CustomerControllerTest {
         ;
     }
 
-    @Disabled
-    @DisplayName("")
+    @DisplayName("Create a customer by passing name")
     @Test
     public void createEmployeeAPI() throws Exception {
+        Customer customer = Customer.builder()
+                .customerNumber(103).contactFirstName("Alberto").contactLastName("Giribaldi").phone("1001").city("Dublin 12").postalCode("12").country("IE").creditLimit(Float.parseFloat("100"))
+                .build();
+        when(customerService.addCustomer(any())).thenReturn(customer);
+        when(customerRepository.saveAndFlush(any())).thenReturn(customer);
+
         mockMvc.perform( MockMvcRequestBuilders
                 .post("/customers")
-                .content(asJsonString(new CustomerDto(null, "custName4", "1001", "Dublin 12","12", "IE", 100)))
+                .content(asJsonString(new CustomerDto(null, "Alberto Giribaldi", "1001", "Dublin 12","12", "IE", 100)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
